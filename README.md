@@ -1,0 +1,1 @@
+API de cadastro de produtos, com autenticação de usuário

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Listagem</title>
+  <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" href="static/listagem.css"/>
+</head>
+<body>
+  <header>
+      <div class="sticky-bg"></div>
+      <a class="brand" href="http://localhost:3000/uploads/listagem.html">
+        <img src="http://pebbledesign.com/_System/images/codepen/logo.png" class="logo" width="220" height="50" />
+        <img src="http://pebbledesign.com/_System/images/codepen/p-logo.png" class="logo-thumb" width="50" height="50" />
+      </a>
+      <nav>
+        <ul class="main-nav">
+          <li class="first-level left">
+            <span>Encontre</span>
+            <ul class="submenu">
+              <li class="submenu-col">
+                <a href="#">
+                  <img src="http://pebbledesign.com/_System/images/codepen/codepen-placeholder.jpg" class="current" />
+                  <div class="submenu-title">lojas cadastradas</div>
+                </a>
+              </li>
+              <li class="submenu-col">
+                <a href="#">
+                  <img src="http://pebbledesign.com/_System/images/codepen/codepen-placeholder-02.jpg" class="current" />
+                  <div class="submenu-title">particulares cadastrados</div>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="first-level left"><span>Anuncie</span></li>
+          <li class="first-level right"><span>Blog</span></li>
+          <li class="first-level right"><span>Quem somos</span></li>
+        </ul>
+      </nav>
+    </header>
+    <section id="slideshow">
+      <h3></h3>
+      <!--<img src="http://pebbledesign.com/_System/images/codepen/codepen-placeholder-05.jpg" />-->  
+    </section>
+    <!--<section style="padding-top: 300px;">
+      <img src="https://www.rumbaresort.com.au/_System/images/section-blank.png" />
+    </section>-->
+    <section style="padding-top: 230px;" >
+        <div id="filter_div" class="filter-div">
+            <div class="container">
+                <select id="marca"style="display: inline-block">
+                    <option value="default">Selecione a Marca</option>  
+                    <option value="Chevrolet">Chevrolet</option>
+                    <option value="Volkswagen">Volkswagen</option>
+                    <option value="Fiat">Fiat</option>
+                    <option value="Renault">Renault</option>
+                    <option value="Hyundai">Hyundai</option>
+                    <option value="Honda">Honda</option>
+                    <option value="Toyota">Toyota</option>
+                    </select>
+              
+                    <select id="modelo" style="display: inline-block">
+                    <option value="default">Selecione o Modelo</option>
+                    </select>
+              
+                    <select id="anodoveiculo" style="display: inline-block">
+                    <option value="default">Selecione o ano do veículo</option>
+                    <option value="2018">2018</option>
+                    <option value="2017">2017</option>
+                    <option value="2016">2016</option>
+                    <option value="2015">2015</option>
+                    <option value="2014">2014</option>
+                    <option value="2013">2013</option>
+                    <option value="2012">2012</option>
+                    <option value="2011">2011</option>
+                    <option value="2010">2010</option>
+                    <option value="2009">2009</option>
+                    <option value="2008">2008</option>
+                    <option value="2007">2007</option>
+                    <option value="2006">2006</option>
+                    <option value="2005">2005</option>
+                    <option value="2004">2004</option>
+                    <option value="2003">2003</option>
+                    <option value="2002">2002</option>
+                    <option value="2001">2001</option>
+                    <option value="2000">2000</option>
+                    </select>
+             <button id="buscar" style="text-align: center;">Buscar</button>
+             <button id="filtroavancado">Filtro Avançado</button>
+
+            </div>
+          </div>
+    <div id="feed_div" class="main-div">
+        <div class="container">
+          <div class="div-anuncio">
+            <h3 style="text-align: center; padding-bottom: 10px;">Anúncios em Destaque</h3>
+          </div>
+          <ul style="list-style: none;" id="carslist">
+  
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <footer>
+    <div class="footer">
+     <p>© Feito por Rafael Lemos ©</p>
+    </div>
+  </footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+<script>
+    $("nav ul.main-nav li.first-level").hover(
+    function(){
+      $("nav ul.main-nav").addClass("hover");
+    }, function(){
+      $("nav ul.main-nav").removeClass("hover");
+    }
+    );
+
+    $(window).scroll(function () {
+		// Header Scrolldown
+		var scrollTop = $(this).scrollTop();
+		if (scrollTop > 10) {
+			$('header').addClass('scroll');
+		}else{
+      $('header').removeClass('scroll');
+    }
+    });
+
+    $('#buscar').on('click',function(){
+
+      $.ajax({
+    url: "http://localhost:3000/products/",
+    type: "GET",
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      console.log(data.count);
+      var info = data.products;
+      for(var i=0; i<info.length; i++){
+        var imageURL = info[i].productImage;
+        var image = imageURL.slice(8);
+        // $("#carslist").append("<li style='border: 1px solid red;'> <a href='"+info[i].url +"' </a> <div class='car-img'> <img style='max-width: 100%; max-height: 100%;'src='"+image + "'></img> </div> <div class='car-nameprice'> <h2>"+ info[i].name + "</h2> <p>R$ " +info[i].price + "</p> </div> <div style='clear: both;'></div> </li>");
+          $("#carslist").append("<li style='border: 1px solid gray;'> <a href='"+info[i].url +"' </a> <div class='car-img' style='background-image: url("+image + ")'></div> <div class='car-nameprice'> <h2>"+ info[i].marca +" " + info[i].modelo + "</h2> <p>R$ " +info[i].price + "</p> <div class='car-info'> <p>Quilometragem: 100.000 KM</p> <p>Combustível: Flex</p> <p>Câmbio: Manual</p> </div> </div> <div style='clear: both;'></div> </li>");
+      }
+      
+
+    },
+    error: function(xhr, status, error) {
+    console.log(xhr);
+    console.log(status);
+    console.log(error);
+    }
+    });
+
+    });
+
+    $(document).ready(function() {
+        $.ajax({
+    url: "http://localhost:3000/products/",
+    type: "GET",
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      console.log(data.count);
+      var info = data.products;
+      for(var i=0; i<info.length; i++){
+        var imageURL = info[i].productImage;
+        var image = imageURL.slice(8);
+        // $("#carslist").append("<li style='border: 1px solid red;'> <a href='"+info[i].url +"' </a> <div class='car-img'> <img style='max-width: 100%; max-height: 100%;'src='"+image + "'></img> </div> <div class='car-nameprice'> <h2>"+ info[i].name + "</h2> <p>R$ " +info[i].price + "</p> </div> <div style='clear: both;'></div> </li>");
+          $("#carslist").append("<li style='border: 1px solid gray;'> <a href='"+info[i].url +"' </a> <div class='car-img' style='background-image: url("+image + ")'></div> <div class='car-nameprice'> <h2>"+ info[i].marca +" " + info[i].modelo + "</h2> <p>R$ " +info[i].price + "</p> <div class='car-info'> <p>Quilometragem: 100.000 KM</p> <p>Combustível: Flex</p> <p>Câmbio: Manual</p> </div> </div> <div style='clear: both;'></div> </li>");
+      }
+      
+
+    },
+    error: function(xhr, status, error) {
+    console.log(xhr);
+    console.log(status);
+    console.log(error);
+    }
+    });
+
+    $("#marca").change(function() {
+        var val = $(this).val();
+        if (val == "Chevrolet") {
+            $("#modelo").html("<option value='Classic'>Classic</option><option value='Cruze'>Cruze</option>");
+        } else if (val == "Volkswagen") {
+            $("#modelo").html("<option value='Gol'>Gol</option><option value='Voyage'>Voyage</option>");
+
+        } else if (val == "Fiat") {
+            $("#modelo").html("<option value='Cronus'>Cronus</option><option value='Punto'>Punto</option>");
+        }
+        else if (val == "Renault") {
+            $("#modelo").html("<option value='Kwid'>Kwid</option><option value='Logan'>Logan</option>");
+        }
+        else if (val == "Hyundai") {
+            $("#modelo").html("<option value='HB20'>HB20</option><option value='Sonata'>Sonata</option>");
+        }
+        else if (val == "Honda") {
+            $("#modelo").html("<option value='Civic'>Civic</option><option value='City'>City</option>");
+        }
+        else if (val == "Toyota") {
+            $("#modelo").html("<option value='Corolla'>Corolla</option><option value='Etios'>Etios</option>");
+        }
+    });
+
+    });
+</script>
+  
+
+</body>
+</html>

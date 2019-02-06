@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Painel seucarro</title>
+  <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" href="static/style.css"/>
+</head>
+<body>
+  <div id="imagem" class="imagem-div">
+    <a><img src="static/venda.jpg" class="img-logo"></a>
+
+  </div>
+
+  <div id="login_div" class="main-div">
+    <h3>Painel de Administração</h3>
+    <input type="email" placeholder="Insira seu e-mail" id="email_field"  />
+    <input type="password" placeholder="Insira sua senha"  id="password_field"  />
+
+    <button onclick="login()">Entrar</button>
+    <button onclick="register_account()">Criar nova conta empresarial</button>
+    <button onclick="register_account_pessoal()">Criar nova conta pessoal</button>
+    <button id="getFeed">Ver Anúncios</button>
+
+  </div>
+  
+
+
+''
+    <div id="user_div" class="loggedin-div">
+      <h3>Bem-vindo ao Painel de Administração</h3>
+      <p id="user_para">Bem-vindo</p>
+      <p id="nao_verificado">Você precisa confirmar o seu e-mail para ter acesso ao painel. <br/>Para confirmar, clique em "Enviar Verificação".</p>
+
+      <button id="verify_btn" onclick="send_verification()" >Enviar Verificação</button>
+      <button id="solicitar_btn" onclick="enviar_solicitacao()" >Novo Anúncio</button>
+      <button id="myposts_btn" onclick="viewmyposts()" >Meus Anúncios</button>
+      <button id="solicitar_btn" onclick="viewmysettings()" >Meu perfil</button>
+      <button onclick="logout()">Realizar Logout</button>
+    </div>
+
+    <div id="preview_div" class="loggedin-div">
+      <h3>Prévia da Publicação</h3>
+
+      <p id="preview_marca"></p>
+      <p id="preview_ano"></p>
+      <p id="preview_quilometragem"></p>
+      <p id="preview_motor"></p>
+      <p id="preview_cor"></p>
+      <p id="preview_combustivel"></p>
+      <p id="preview_cambio"></p>
+      <p id="preview_direcao"></p>
+      <p id="preview_valor"></p>
+      <p id="preview_responsavel"></p>
+      <p id="preview_telefone"></p>
+      <button id="getUser">Publicar</button>
+      <button id="solicitar_btn" onclick="backtonewpostpage()" >Voltar</button>
+    </div>
+
+    <div id="feed_div" class="main-div">
+      <h3>Anúncios</h3>
+      <ul id="carslist">
+
+      </ul>
+    </div>
+
+
+    <div id="suporte_div" class="loggedin-div">
+      <h2>Novo Anúncio</h2>
+      <select id="marca">
+      <option value="default">Selecione a Marca</option>  
+      <option value="Chevrolet">Chevrolet</option>
+      <option value="Volkswagen">Volkswagen</option>
+      <option value="Fiat">Fiat</option>
+      <option value="Renault">Renault</option>
+      <option value="Hyundai">Hyundai</option>
+      <option value="Honda">Honda</option>
+      <option value="Toyota">Toyota</option>
+      </select>
+
+      <select id="modelo">
+      <option value="default">Selecione o Modelo</option>
+      </select>
+
+      <select id="anodoveiculo">
+      <option value="default">Selecione o ano do veículo</option>
+      <option value="2018">2018</option>
+      <option value="2017">2017</option>
+      <option value="2016">2016</option>
+      <option value="2015">2015</option>
+      <option value="2014">2014</option>
+      <option value="2013">2013</option>
+      <option value="2012">2012</option>
+      <option value="2011">2011</option>
+      <option value="2010">2010</option>
+      <option value="2009">2009</option>
+      <option value="2008">2008</option>
+      <option value="2007">2007</option>
+      <option value="2006">2006</option>
+      <option value="2005">2005</option>
+      <option value="2004">2004</option>
+      <option value="2003">2003</option>
+      <option value="2002">2002</option>
+      <option value="2001">2001</option>
+      <option value="2000">2000</option>
+      </select>
+      <input type="text" id="quilometragem" placeholder="Quilometragem"/>
+      <input type="text" id="motor" placeholder="Motor"/>
+      <input type="text" id="cor" placeholder="Cor do Veículo"/>
+      <select id="combustivel">
+      <option value="default">Combustível</option>
+      <option value="gasolina">Gasolina</option>
+      <option value="alcool">Álcool</option>
+      <option value="flex">Flex</option>
+      <option value="diesel">Diesel</option>
+      </select>
+       <select id="cambio">
+      <option value="default">Tipo do Câmbio</option>
+      <option value="Manual">Manual</option>
+      <option value="Automatico">Automático</option>
+      <option value="Automatizado">Automatizado</option>
+      </select>
+      <select id="direcao">
+      <option value="default">Tipo da Direção</option>
+      <option value="Hidraulica">Hidráulica</option>
+      <option value="Eletrica">Elétrica</option>
+      </select>
+      <input type="text" id="valor" placeholder="Valor R$"/>
+      <input type="text" id="responsavel" placeholder="Responsável"/>
+      <input type="tel" id="celular" placeholder="Telefone para Contato (DD) 9 9999-9999"/>
+      <input type="file" id="filechooser" multiple="multiple">
+      <button onclick="previewpost()">Confirmar e Postar</button>
+      <button onclick="backtouserpage()">Voltar</button>
+
+    </div>
+
+    <div id="cadastro_div" class="loggedin-div">
+      <h2>Cadastro de Conta</h2>
+    <input type="number" placeholder="CNPJ" id="newcompany_cnpjfield"  />
+    <input type="text" placeholder="Nome da Empresa" id="newcompany_namefield"  />
+    <input type="text" placeholder="Nome do Responsável" id="newcompany_ceofield"  />
+    <input type="text" placeholder="CPF do Responsável" id="newcompany_cpffield"  />
+    <input type="text" placeholder="CEP da Empresa" id="newcompany_cepfield"  />
+    <input type="email" placeholder="Insira seu e-mail" id="newcompany_emailfield"  />
+    <input type="password" placeholder="Insira sua senha"  id="newcompany_passwordfield"  />
+    <input type="number" placeholder="Telefone para contato" id="newcompany_numberfield" />
+    <button onclick="create_account()">Cadastrar Empresa</button>
+    <button onclick="backtofirstpage()">Voltar</button>
+
+    </div>
+
+    <footer>
+    <div class="footer">
+     <p>© Feito por Rafael Lemos ©</p>
+    </div>
+  </footer>
+
+
+
+<script src="https://www.gstatic.com/firebasejs/4.10.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBp7hfjnffCYzf5Jy2AtqZM0ypgidvyNfE",
+    authDomain: "restaure-frostpk.firebaseapp.com",
+    databaseURL: "https://restaure-frostpk.firebaseio.com",
+    projectId: "restaure-frostpk",
+    storageBucket: "restaure-frostpk.appspot.com",
+    messagingSenderId: "379466795596"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script src="static/index.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+<script>
+
+  $(document).ready(function() {
+    $('#quilometragem').mask('000.000');
+    $('#motor').mask('0.0');
+    $('#celular').mask('(00) 0 00000000');
+    $('#valor').mask('#.##0,00', {reverse: true});
+    $('#newcompany_cnpj').mask('00.000.000/0000-00');
+    $('#newcompany_cpf').mask('000.000.000-00');
+    $('#newcompany_cep').mask('00000-000');
+
+    $('#getUser').on('click',function(){
+      $.ajax({
+    url: "http://localhost:3000/products/",
+    type: "GET",
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      var info = data.products;
+      for(var i=0; i<info.length; i++){
+        console.log(info[i].name);
+        console.log(info[i].price);
+        console.log(info[i]._id);
+        console.log(info[i].productImage);
+        console.log(info[i].url);
+      }
+    },
+    error: function(xhr, status, error) {
+    console.log(xhr);
+    console.log(status);
+    console.log(error);
+    }
+    });
+    });
+
+    $('#getFeed').on('click',function(){
+      document.getElementById("feed_div").style.display="block";  
+      $.ajax({
+    url: "http://localhost:3000/products/",
+    type: "GET",
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+      var info = data.products;
+      for(var i=0; i<info.length; i++){
+        var imageURL = info[i].productImage;
+        var image = imageURL.slice(8);
+        $("#carslist").append("<li> <a href='"+info[i].url +"' </a> <h2>"+ info[i].name + "</h2> <p>R$ " +info[i].price + "</p> <img style='width: 300px'src='"+image + "'></img> </li>");
+      }
+      
+
+    },
+    error: function(xhr, status, error) {
+    console.log(xhr);
+    console.log(status);
+    console.log(error);
+    }
+    });
+    });
+    
+
+    $("#marca").change(function() {
+        var val = $(this).val();
+        if (val == "Chevrolet") {
+            $("#modelo").html("<option value='Classic'>Classic</option><option value='Cruze'>Cruze</option>");
+        } else if (val == "Volkswagen") {
+            $("#modelo").html("<option value='Gol'>Gol</option><option value='Voyage'>Voyage</option>");
+
+        } else if (val == "Fiat") {
+            $("#modelo").html("<option value='Cronus'>Cronus</option><option value='Punto'>Punto</option>");
+        }
+        else if (val == "Renault") {
+            $("#modelo").html("<option value='Kwid'>Kwid</option><option value='Logan'>Logan</option>");
+        }
+        else if (val == "Hyundai") {
+            $("#modelo").html("<option value='HB20'>HB20</option><option value='Sonata'>Sonata</option>");
+        }
+        else if (val == "Honda") {
+            $("#modelo").html("<option value='Civic'>Civic</option><option value='City'>City</option>");
+        }
+        else if (val == "Toyota") {
+            $("#modelo").html("<option value='Corolla'>Corolla</option><option value='Etios'>Etios</option>");
+        }
+    });
+
+
+});
+</script>
+  
+
+</body>
+</html>
